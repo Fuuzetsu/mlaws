@@ -29,3 +29,10 @@ associativity {ℓ} {M} M-inst = {A B C : Set ℓ} {f : A → M B} {g : B → M 
   → (a : M A)
   → ((a >>= f) >>= g) ≡ (a >>= (λ x → f x >>= g))
   where _>>=_  = RawMonad._>>=_  M-inst
+
+data IsMonad {ℓ : Level} : (M : Set ℓ → Set ℓ) → (RawMonad {ℓ} M) → Set (suc ℓ) where
+  isMonad : {M : Set ℓ → Set ℓ} {inst : RawMonad {ℓ} M}
+    → right-identity {ℓ} inst
+    → left-identity  {ℓ} inst
+    → associativity  {ℓ} inst
+    → IsMonad M inst

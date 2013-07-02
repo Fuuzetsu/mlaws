@@ -10,13 +10,6 @@ open import Category.Monad
 open import Function
 open import MonadLaws
 
-data IsMonad {ℓ : Level} : (M : Set ℓ → Set ℓ) → (RawMonad {ℓ} M) → Set (suc ℓ) where
-  isMonad : {M : Set ℓ → Set ℓ} {inst : RawMonad {ℓ} M}
-    → right-identity {ℓ} inst
-    → left-identity  {ℓ} inst
-    → associativity  {ℓ} inst
-    → IsMonad M inst
-
 monad-Maybe : ∀ {f} → RawMonad {f} Maybe
 monad-Maybe = record { return = just
                      ; _>>=_  = λ{ (just x) f → f x; nothing _ → nothing }
